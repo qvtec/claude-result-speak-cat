@@ -1,8 +1,7 @@
 {
   "name": "claude-result-speak-pet",
   "owner": {
-    "name": "qvt",
-    "email": "qvtec3@gmail.com"
+    "name": "qvtec"
   },
   "description": "Desktop pet that pops up in the bottom-right corner to deliver Claude Code notifications.",
   "plugins": [
@@ -10,7 +9,7 @@
       "name": "claude-result-speak-pet",
       "source": {
         "source": "url",
-        "url": "https://github.com/qvtec/claude-result-speak-pet.git"
+        "url": "https://github.com/qvtec/claude-result-speak-cat.git"
       },
       "description": "A desktop pet character that appears in the bottom-right corner with speech bubble notifications. Supports custom PNG and animated GIF. WSL2 only."
     }

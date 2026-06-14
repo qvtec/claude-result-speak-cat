@@ -41,8 +41,7 @@ For a transparent floating window, install PyObjC into the system Python:
 | Environment | Result |
 |-------------|--------|
 | `/usr/bin/python3` + PyObjC installed | Transparent floating window + animation |
-| Any `python3` + tkinter available | Window with black background + animation |
-| No Python available | System notification via `osascript` |
+| PyObjC not available | System notification via `osascript` |
 
 ## Installation
 

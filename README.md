@@ -14,30 +14,34 @@ A Claude Code plugin that shows a desktop pet in the bottom-right corner to deli
 - **Auto-dismiss** — disappears after a configurable duration
 - **Click to close** — click the pet to dismiss immediately
 - **WSL2 support** — runs via PowerShell from WSL2
-- **macOS support** — runs via Python 3 + AppKit (PyObjC), no extra install needed
+- **Windows support** — runs via PowerShell from Git Bash / MSYS2
+- **macOS support** — transparent floating window via AppKit (PyObjC), falls back to tkinter or system notification
 
 ## Requirements
 
 | Platform | Requirements |
 |----------|-------------|
 | WSL2 | `powershell.exe` (built-in) |
-| macOS | Xcode Command Line Tools (for PyObjC via `/usr/bin/python3`) |
+| Windows (native) | Git Bash or MSYS2 + `powershell.exe` (built-in) |
+| macOS | See below |
 
-Xcode CLT is standard on developer Macs. If not installed:
+### macOS: installing PyObjC (recommended)
+
+For a transparent floating window, install PyObjC into the system Python:
 
 ```bash
-xcode-select --install
+/usr/bin/python3 -m pip install --user pyobjc-framework-Cocoa
 ```
+
+> This uses the macOS built-in `/usr/bin/python3` with `--user` (no sudo, no Homebrew).  
+> Homebrew Python is not recommended — it replaces system libraries and can break other tools.
 
 ### macOS fallback behavior
 
 | Environment | Result |
 |-------------|--------|
-| `/usr/bin/python3` with PyObjC (Xcode CLT) | Full pet image + animation |
-| User's `python3` with tkinter | Full pet image + animation |
-| No Python available | System notification via `osascript` |
-
-No `pip install` or `brew install` required.
+| `/usr/bin/python3` + PyObjC installed | Transparent floating window + animation |
+| PyObjC not available | System notification via `osascript` |
 
 ## Installation
 
@@ -98,7 +102,7 @@ This keeps TTS while letting the pet handle notifications.
 ## Security & Privacy
 
 - **No network access** — notification content never leaves your machine
-- **No external packages** — no third-party dependencies means no supply chain risk
+- **Minimal dependencies** — PyObjC (optional) uses Apple's own framework; tkinter fallback needs no extra install
 - **Fully local** — only plugin scripts and OS built-ins are executed
 
 ## License

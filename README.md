@@ -14,6 +14,7 @@ A Claude Code plugin that shows a desktop pet in the bottom-right corner to deli
 - **Auto-dismiss** — disappears after a configurable duration
 - **Click to close** — click the pet to dismiss immediately
 - **WSL2 support** — runs via PowerShell from WSL2
+- **Windows support** — runs via PowerShell from Git Bash / MSYS2
 - **macOS support** — runs via Python 3 + tkinter
 
 ## Requirements
@@ -21,6 +22,7 @@ A Claude Code plugin that shows a desktop pet in the bottom-right corner to deli
 | Platform | Requirements |
 |----------|-------------|
 | WSL2 | `powershell.exe` (built-in) |
+| Windows (native) | Git Bash or MSYS2 + `powershell.exe` (built-in) |
 | macOS | Python 3 + `python-tk` (see below) |
 
 ### macOS: installing tkinter

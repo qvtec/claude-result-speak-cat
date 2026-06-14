@@ -63,6 +63,25 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   exit 0
 fi
 
+# Native Windows (Git Bash / MSYS2)
+UNAME_S="$(uname -s 2>/dev/null || true)"
+if [[ "$UNAME_S" == MINGW* ]] || [[ "$UNAME_S" == MSYS* ]] || [[ "$UNAME_S" == CYGWIN* ]]; then
+  WIN_ASSETS_DIR=$(cygpath -w "$ASSETS_DIR" 2>/dev/null || echo "$ASSETS_DIR")
+  WIN_LABEL_IMAGE=$(cygpath -w "$ASSETS_DIR/label.png" 2>/dev/null || echo "$ASSETS_DIR/label.png")
+  WIN_PS1=$(cygpath -w "$SCRIPT_DIR/Show-Pet.ps1" 2>/dev/null || echo "$SCRIPT_DIR/Show-Pet.ps1")
+
+  safe=$(printf '%s' "$FULL_MSG" | sed "s/'/''/g")
+
+  powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$WIN_PS1" \
+    -Message "$safe" \
+    -PetImageDir "$WIN_ASSETS_DIR" \
+    -PetBaseName "$PET_BASE" \
+    -LabelImagePath "$WIN_LABEL_IMAGE" \
+    -DisplaySeconds "$DISPLAY_SECS" \
+    >/dev/null 2>&1 &
+  exit 0
+fi
+
 # WSL2
 if ! grep -qi microsoft /proc/version 2>/dev/null; then
   exit 0

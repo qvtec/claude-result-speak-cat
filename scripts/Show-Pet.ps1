@@ -94,8 +94,8 @@ public static class LayeredWin {
 }
 "@ -ReferencedAssemblies System.Windows.Forms,System.Drawing
 
-$PET_W    = 150
-$PET_H    = 150
+$PET_W    = 100
+$PET_H    = 100
 $BUBBLE_W = 200
 $BUBBLE_H = 68
 $MARGIN   = 16

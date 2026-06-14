@@ -14,35 +14,30 @@ A Claude Code plugin that shows a desktop pet in the bottom-right corner to deli
 - **Auto-dismiss** — disappears after a configurable duration
 - **Click to close** — click the pet to dismiss immediately
 - **WSL2 support** — runs via PowerShell from WSL2
-- **macOS support** — runs via Python 3 + tkinter
+- **macOS support** — runs via Python 3 + AppKit (PyObjC), no extra install needed
 
 ## Requirements
 
 | Platform | Requirements |
 |----------|-------------|
 | WSL2 | `powershell.exe` (built-in) |
-| macOS | Python 3 + `python-tk` (see below) |
+| macOS | Xcode Command Line Tools (for PyObjC via `/usr/bin/python3`) |
 
-### macOS: installing tkinter
-
-Homebrew Python does not bundle tkinter. Install it separately:
+Xcode CLT is standard on developer Macs. If not installed:
 
 ```bash
-brew install python-tk@3.13
+xcode-select --install
 ```
-
-> If you use a different Python version, replace `3.13` accordingly (e.g. `python-tk@3.12`).  
-> python.org Python already includes tkinter — no extra step needed.
 
 ### macOS fallback behavior
 
-| Python / Tk version | Result |
-|---------------------|--------|
-| Python 3 with Tk 8.6+ (Homebrew + python-tk / python.org) | Full pet image + animation |
-| Python 3 with Tk 8.5 (Xcode CLT default) | 🐱 emoji instead of image |
-| `python3` not found | System notification via `osascript` |
+| Environment | Result |
+|-------------|--------|
+| `/usr/bin/python3` with PyObjC (Xcode CLT) | Full pet image + animation |
+| User's `python3` with tkinter | Full pet image + animation |
+| No Python available | System notification via `osascript` |
 
-No `pip install` required in any case.
+No `pip install` or `brew install` required.
 
 ## Installation
 

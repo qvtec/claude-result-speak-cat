@@ -4,11 +4,19 @@
     [string]$PetBaseName = "cat2",
     [string]$LabelImagePath = "",
     [int]$DisplaySeconds = 5,
-    [int]$PetSize = 100
+    [int]$PetSize = 100,
+    [string]$EventType = "complete"
 )
 
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName System.Media
+
+switch ($EventType) {
+    "complete"   { [System.Media.SystemSounds]::Asterisk.Play() }
+    "permission" { [System.Media.SystemSounds]::Exclamation.Play() }
+    "idle"       { [System.Media.SystemSounds]::Beep.Play() }
+}
 
 Add-Type -TypeDefinition @"
 using System;

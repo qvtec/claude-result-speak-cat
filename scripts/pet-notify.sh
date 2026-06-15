@@ -27,16 +27,19 @@ case "$TYPE" in
   complete)
     MSG="${CLAUDE_RESULT_SPEAK_CAT_MESSAGE_COMPLETE:-}"
     EMOJI="✨"
+    SOUND="Blow"
     [[ -z "$MSG" ]] && MSG="$DEFAULT_COMPLETE"
     ;;
   permission)
     MSG="${CLAUDE_RESULT_SPEAK_CAT_MESSAGE_PERMISSION:-}"
     EMOJI="🐟"
+    SOUND="Pop"
     [[ -z "$MSG" ]] && MSG="$DEFAULT_PERMISSION"
     ;;
   idle)
     MSG="${CLAUDE_RESULT_SPEAK_CAT_MESSAGE_IDLE:-}"
     EMOJI="🐾"
+    SOUND="Tink"
     [[ -z "$MSG" ]] && MSG="$DEFAULT_IDLE"
     ;;
   *) exit 0 ;;
@@ -55,7 +58,7 @@ PET_BASE="${BASES[$RANDOM % ${#BASES[@]}]}"
 # macOS
 if [[ "$(uname -s)" == "Darwin" ]]; then
   /usr/bin/python3 "$SCRIPT_DIR/show-pet.py" \
-    "$FULL_MSG" "$ASSETS_DIR" "$PET_BASE" "$ASSETS_DIR/label.png" "$DISPLAY_SECS" "$PET_SIZE" \
+    "$FULL_MSG" "$ASSETS_DIR" "$PET_BASE" "$ASSETS_DIR/label.png" "$DISPLAY_SECS" "$PET_SIZE" "$SOUND" \
     >/dev/null 2>&1 &
   exit 0
 fi
@@ -76,6 +79,7 @@ if [[ "$UNAME_S" == MINGW* ]] || [[ "$UNAME_S" == MSYS* ]] || [[ "$UNAME_S" == C
     -LabelImagePath "$WIN_LABEL_IMAGE" \
     -DisplaySeconds "$DISPLAY_SECS" \
     -PetSize "$PET_SIZE" \
+    -EventType "$TYPE" \
     >/dev/null 2>&1 &
   exit 0
 fi
@@ -97,4 +101,6 @@ powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$WIN_PS
   -PetBaseName "$PET_BASE" \
   -LabelImagePath "$WIN_LABEL_IMAGE" \
   -DisplaySeconds "$DISPLAY_SECS" \
+  -PetSize "$PET_SIZE" \
+  -EventType "$TYPE" \
   >/dev/null 2>&1 &

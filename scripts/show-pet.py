@@ -42,8 +42,13 @@ def show_osascript(message):
 
 
 # ── AppKit implementation ────────────────────────────────────────────────────
-def show_appkit(message, pet_dir, pet_base, label_path, disp_secs, pet_size=100):
+def show_appkit(message, pet_dir, pet_base, label_path, disp_secs, pet_size=100, sound="Glass"):
     _done[0] = False
+
+    subprocess.Popen(
+        ["afplay", f"/System/Library/Sounds/{sound}.aiff"],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+    )
 
     app = NSApplication.sharedApplication()
     app.setActivationPolicy_(NSApplicationActivationPolicyAccessory)
@@ -57,10 +62,10 @@ def show_appkit(message, pet_dir, pet_base, label_path, disp_secs, pet_size=100)
                 frames.append(img)
 
     PET_W = PET_H = pet_size
-    BUBBLE_W, BUBBLE_H = 200, 64
+    BUBBLE_W, BUBBLE_H = 170, 54
     PAD = 12
     MARGIN_R = 16
-    MARGIN_B = 80  # above the Dock
+    MARGIN_B = 16  # above the Dock
 
     form_w = max(BUBBLE_W, PET_W) + PAD * 2
     form_h = BUBBLE_H + PET_H
@@ -144,9 +149,10 @@ def main():
     label_path = a[3] if len(a) > 3 else ""
     disp_secs  = int(a[4]) if len(a) > 4 else 5
     pet_size   = int(a[5]) if len(a) > 5 else 100
+    sound      = a[6] if len(a) > 6 else "Glass"
 
     if HAS_APPKIT:
-        show_appkit(message, pet_dir, pet_base, label_path, disp_secs, pet_size)
+        show_appkit(message, pet_dir, pet_base, label_path, disp_secs, pet_size, sound)
     else:
         show_osascript(message)
 
